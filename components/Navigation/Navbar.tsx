@@ -24,7 +24,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="fixed flex w-screen flex-row justify-between bg-white py-3 dark:bg-slate-900">
+            <nav className="fixed z-10 flex w-screen flex-row justify-between bg-white py-3 dark:bg-slate-900">
                 <div className="flex flex-row items-center gap-6 pl-4">
                     <img src={LogoColor.src} className="h-10" />
                     <NavLink to="/" lang={lang}>

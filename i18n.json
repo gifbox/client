@@ -4,6 +4,6 @@
     "pages": {
         "*": ["common"],
         "/": ["home"],
-        "/view/*": []
+        "/view/[slug]": ["view"]
     }
 }

@@ -6,6 +6,7 @@ interface ButtonProps {
     href?: string
     onClick?: () => void
     variant?: "primary" | "transparent" | "danger"
+    className?: string
 }
 
 const Button = ({
@@ -13,6 +14,7 @@ const Button = ({
     onClick,
     href,
     variant = "primary",
+    className,
 }: ButtonProps) => {
     const router = useRouter()
     const { lang } = useTranslation()
@@ -48,12 +50,14 @@ const Button = ({
                 break
         }
 
+        if (className) outClasses.push(className)
+
         return outClasses.join(" ")
     }
 
     return (
         <button
-            className={`cursor-pointer rounded border-none px-3 py-2 transition-all hover:brightness-105 active:brightness-110 ${variantClasses()}`}
+            className={`cursor-pointer rounded border-none px-3 py-2 transition-all hover:font-bold hover:brightness-105 active:brightness-110 ${variantClasses()}`}
             onClick={_onClick}
         >
             {children}

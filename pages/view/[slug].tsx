@@ -1,20 +1,25 @@
-import type { GetServerSidePropsContext, NextApiResponse, NextPage } from "next"
-import Trans from "next-translate/Trans"
+import type { GetServerSidePropsContext, NextApiResponse } from "next"
 import useTranslation from "next-translate/useTranslation"
 import { Client, Responses } from "gifbox.js"
-import { useRouter } from "next/router"
-import { useEffect } from "react"
 import { redirect } from "next/dist/server/api-utils"
 import GIFNotFound from "../../assets/illustrations/no-such-gif.svg"
+import Link from "next/link"
+import Button from "../../components/UI/Button"
+import Tag from "../../components/UI/Tag"
+import { CheckCircle } from "@styled-icons/boxicons-solid"
 
 interface ViewProps {
     error?: string
-    file?: string
+    gifUrl?: string
+    data?: Responses.PostInfoResponse
 }
 
-const View = ({ file, error }: ViewProps) => {
-    const { t, lang } = useTranslation()
-    const router = useRouter()
+const View = ({ gifUrl, error, data }: ViewProps) => {
+    const { t, lang } = useTranslation("view")
+
+    const downloadAsWebp = () => {
+        window.open(gifUrl, "_blank")
+    }
 
     if (error === "Post not found") {
         return (
@@ -44,7 +49,55 @@ const View = ({ file, error }: ViewProps) => {
                     </p>
                 </div>
             ) : (
-                <></>
+                <div className="flex flex-col gap-3 xl:flex-row">
+                    <div className="mb-4 flex flex-col">
+                        <div className="md:p-4 xl:mr-4 xl:w-96 xl:rounded-lg xl:bg-blue-50 xl:shadow-black xl:drop-shadow-md xl:dark:bg-slate-800">
+                            <img src={gifUrl} className="md:w-full xl:w-96" />
+                            <Button
+                                className="mt-4 w-full"
+                                onClick={downloadAsWebp}
+                            >
+                                {t("download_webp")}
+                            </Button>
+                        </div>
+                    </div>
+                    <div className="flex w-full flex-col gap-1">
+                        <h1 className="mb-4 text-3xl font-black">
+                            {data?.title}
+                        </h1>
+                        <h2 className="text-lg font-bold">{t("tags")}</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {data?.tags.map((tag) => (
+                                <Link
+                                    key={tag}
+                                    href={`/search?q=${encodeURIComponent(
+                                        tag
+                                    )}`}
+                                    locale={lang}
+                                >
+                                    <Tag>{tag}</Tag>
+                                </Link>
+                            ))}
+                        </div>
+                        <h2 className="mt-4 text-lg font-bold">
+                            {t("author")}
+                        </h2>
+                        <div className="flex w-full items-center rounded-lg bg-blue-50 p-4 dark:bg-slate-800">
+                            <div className="h-12 w-12 rounded-full bg-slate-700"></div>
+                            <h4 className="ml-4 flex items-center text-xl font-bold">
+                                {data?.author.displayName}
+                                {data?.author.verified && (
+                                    <span className="ml-1.5 mb-1 text-blue-500">
+                                        <CheckCircle size={20} />
+                                    </span>
+                                )}
+                            </h4>
+                            <span className="ml-2 text-sm font-normal opacity-50">
+                                @{data?.author.username}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     )
@@ -69,8 +122,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
         return {
             props: {
-                error: null,
-                file: post.file.fileName,
+                gifUrl: `${process.env.GIFBOX_API!}/file/posts/${
+                    post.file.fileName
+                }`,
+                data: post,
             },
         }
     } catch (e: any) {
@@ -78,7 +133,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         return {
             props: {
                 error,
-                file: null,
             },
         }
     }
