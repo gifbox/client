@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Button from "../UI/Button"
 import Spinner from "../UI/Spinner"
 import useTranslation from "next-translate/useTranslation"
+import Cookies from "js-cookie"
 
 export const AccountButtons = () => {
     const { t } = useTranslation("common")
@@ -9,12 +10,20 @@ export const AccountButtons = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
-        setIsLoggedIn(!!localStorage.getItem("gifboxToken"))
+        setIsLoggedIn(!!Cookies.get("GIFBOX_TOKEN"))
         setHasLoaded(true)
     })
 
     if (!hasLoaded) {
         return <Spinner />
+    }
+
+    if (isLoggedIn) {
+        return (
+            <Button variant="transparent" href="/account">
+                {t("account")}
+            </Button>
+        )
     }
 
     return (

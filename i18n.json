@@ -4,6 +4,9 @@
     "pages": {
         "*": ["common"],
         "/": ["home"],
-        "/view/[slug]": ["view"]
+        "/view/[slug]": ["view"],
+        "/login": ["user"],
+        "/register": ["user"],
+        "/account": ["user"]
     }
 }
