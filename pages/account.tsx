@@ -47,7 +47,7 @@ const Account = ({ baseURL }: AccountProps) => {
         })
     }
 
-    if (isLoading) {
+    if (isLoading || !self) {
         return (
             <div className="flex h-72 items-center justify-center">
                 <Spinner />
@@ -58,7 +58,7 @@ const Account = ({ baseURL }: AccountProps) => {
     return (
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
             <h1 className="mt-12 pb-4 text-4xl font-black lg:text-6xl">
-                {t("hello", { name: self?.displayName })}
+                {t("hello", { name: self.displayName })}
             </h1>
             <div className="block py-2">
                 <h2 className="py-3 text-2xl font-bold">
