@@ -792,10 +792,10 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-gifbox.js@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/gifbox.js/-/gifbox.js-0.3.0.tgz#6a7f399449037d4e318bd2e48e8cf283b9682f6a"
-  integrity sha512-TOQ51kEOi0d288tRewpq8ZOdvr4xdYuB7tg5iaQlqcbQ57/Fa+cGgFs+L7Az2SYyak2p+BJfqTrtptl3Q2m0VQ==
+gifbox.js@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/gifbox.js/-/gifbox.js-0.6.0.tgz#7dfe1a1c57b51a4c6be91765d679b86169f636b4"
+  integrity sha512-mTQ9oybnsJfYfExwfL/hbA0PJDBPkVUNd8jMTZ1Fk7JUeiHLJZpJ6UhgC2xQJDufhX47DeBLEOGsyCQ2g2YYNQ==
   dependencies:
     axios "^0.24.0"
     form-data "^4.0.0"

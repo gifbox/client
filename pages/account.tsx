@@ -7,17 +7,21 @@ import { Client, ClientUser } from "gifbox.js"
 import Spinner from "../components/UI/Spinner"
 import Button from "../components/UI/Button"
 import Trans from "next-translate/Trans"
+import AccountDataSettings from "../components/Sections/AccountDataSettings"
 
 interface AccountProps {
     baseURL: string
+    dataHandler: string
 }
 
-const Account = ({ baseURL }: AccountProps) => {
+const Account = ({ baseURL, dataHandler }: AccountProps) => {
     const { t, lang } = useTranslation("user")
+    const router = useRouter()
+
     const [isLoading, setIsLoading] = useState(true)
     const [self, setSelf] = useState<ClientUser>()
     const [client, setClient] = useState<Client | null>(null)
-    const router = useRouter()
+    const [currentUsername, setCurrentUsername] = useState<string>("")
 
     useEffect(() => {
         if (!Cookies.get("GIFBOX_TOKEN"))
@@ -33,6 +37,7 @@ const Account = ({ baseURL }: AccountProps) => {
             .loginBearer(Cookies.get("GIFBOX_TOKEN")!)
             .then(() => {
                 setSelf(client.clientUser!)
+                setCurrentUsername(client.clientUser?.displayName!)
                 setIsLoading(false)
             })
             .catch(() => {
@@ -58,8 +63,17 @@ const Account = ({ baseURL }: AccountProps) => {
     return (
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
             <h1 className="mt-12 pb-4 text-4xl font-black lg:text-6xl">
-                {t("hello", { name: self.displayName })}
+                {t("hello", { name: currentUsername })}
             </h1>
+            <div className="block py-2">
+                <h2 className="py-3 text-2xl font-bold">
+                    {t("customize.heading")}
+                </h2>
+                <AccountDataSettings
+                    gifboxClient={client!}
+                    setCurrentUsername={setCurrentUsername}
+                />
+            </div>
             <div className="block py-2">
                 <h2 className="py-3 text-2xl font-bold">
                     {t("log_out.generic")}
@@ -90,14 +104,13 @@ const Account = ({ baseURL }: AccountProps) => {
                     components={[
                         <p className="block pb-3 text-gray-800 dark:text-gray-300" />,
                         <a
-                            href="mailto:XX?subject=Request%20regarding%20the%20right%20to%20be%20forgotten"
+                            href={`mailto:${dataHandler}?subject=Request%20regarding%20the%20right%20to%20be%20forgotten`}
                             className="font-bold text-blue-500"
                         />,
                         <span className="font-bold" />,
                     ]}
                     values={{
-                        data_handler:
-                            "INTENTIONALLY LEFT BLANK IN DEVELOPMENT PHASE",
+                        data_handler: dataHandler,
                     }}
                 />
                 <h3 className="pb-3 text-xl font-bold">
@@ -108,13 +121,12 @@ const Account = ({ baseURL }: AccountProps) => {
                     components={[
                         <p className="block pb-3 text-gray-800 dark:text-gray-300" />,
                         <a
-                            href="mailto:XX?subject=Request%20regarding%20the%20right%20to%20data%20portability"
+                            href={`mailto:${dataHandler}?subject=Request%20regarding%20the%20right%20to%20data%20portability`}
                             className="font-bold text-blue-500"
                         />,
                     ]}
                     values={{
-                        data_handler:
-                            "INTENTIONALLY LEFT BLANK IN DEVELOPMENT PHASE",
+                        data_handler: dataHandler,
                     }}
                 />
             </div>
@@ -126,6 +138,7 @@ export async function getServerSideProps() {
     return {
         props: {
             baseURL: process.env.GIFBOX_API!,
+            dataHandler: process.env.GIFBOX_DATA_HANDLER_EMAIL!,
         },
     }
 }
