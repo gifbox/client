@@ -7,6 +7,7 @@
         "/view/[slug]": ["view"],
         "/login": ["user"],
         "/register": ["user"],
-        "/account": ["user"]
+        "/account": ["user"],
+        "/new": ["new"]
     }
 }

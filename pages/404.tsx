@@ -10,7 +10,7 @@ const PNF: NextPage = () => {
             <img
                 alt="404"
                 src={Illustration.src}
-                className="pointer-events-none w-11/12 sm:w-1/3 lg:w-1/4"
+                className="pointer-events-none w-11/12 drop-shadow-xl sm:w-1/3 lg:w-1/4"
             />
             <h1 className="mt-12 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text pb-4 text-2xl font-black text-transparent sm:text-4xl lg:text-6xl">
                 {t("error_pages.not_found.title")}

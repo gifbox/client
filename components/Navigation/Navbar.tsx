@@ -30,6 +30,9 @@ const Navbar = () => {
                     <NavLink to="/" lang={lang}>
                         {t("pages.home")}
                     </NavLink>
+                    <NavLink to="/new" lang={lang}>
+                        {t("pages.new")}
+                    </NavLink>
                 </div>
                 <div className="pr-4">
                     <AccountButtons />

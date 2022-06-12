@@ -110,10 +110,23 @@ const Register = ({ baseURL, sessionName }: RegisterProps) => {
     )
 }
 
-export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const cookies = useCookie(ctx)
-    if (cookies.has("GIFBOX_TOKEN"))
-        return redirect(ctx.res as NextApiResponse, 302, "/")
+
+    if (cookies.has("GIFBOX_TOKEN")) {
+        redirect(ctx.res as NextApiResponse, 302, "/")
+        return {}
+    }
+
+    const gifboxClient = new Client({
+        baseURL: process.env.GIFBOX_API!,
+    })
+
+    try {
+        await gifboxClient.loginBearer(cookies.get("GIFBOX_TOKEN")!)
+    } catch (e) {
+        cookies.remove("GIFBOX_TOKEN")
+    }
 
     const parser = UAParser(ctx.req.headers["user-agent"]?.toString())
     const sessionName = `${parser.os.name} ${parser.os.version} (${parser.browser.name})`
