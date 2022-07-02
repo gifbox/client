@@ -1,4 +1,5 @@
 import { CloudUpload } from "@styled-icons/boxicons-solid"
+import useTranslation from "next-translate/useTranslation"
 import { ChangeEvent, useRef, useState } from "react"
 
 interface FileButtonProps {
@@ -8,6 +9,8 @@ interface FileButtonProps {
 
 const FileButton = ({ acceptFile, accept }: FileButtonProps) => {
     const inputRef = useRef<HTMLInputElement>(null)
+
+    const { t } = useTranslation("common")
 
     const [currentFileName, setCurrentFileName] = useState<string | null>(null)
 
@@ -40,7 +43,7 @@ const FileButton = ({ acceptFile, accept }: FileButtonProps) => {
                 className="flex cursor-pointer items-center gap-2 rounded border-none bg-blue-500 px-3 py-2 text-white transition-all hover:font-bold hover:brightness-105 active:brightness-110"
             >
                 <CloudUpload size={30} />
-                {currentFileName ?? "Select"}
+                {currentFileName ?? t("select_file")}
             </button>
         </>
     )

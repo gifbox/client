@@ -67,7 +67,7 @@ const New = ({ baseURL }: NewProps) => {
                 locale: lang,
             })
         } catch (e: any) {
-            const errorText = e.response.data.error ?? String(e)
+            const errorText = e?.response?.data?.error ?? String(e)
             setError(errorText)
             setPreviewLoading(false)
         }

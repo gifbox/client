@@ -1,5 +1,5 @@
 import { Client } from "gifbox.js"
-import { PostPopularORSearchResponse } from "gifbox.js/dist/types/Responses"
+import { PostPopularResponse } from "gifbox.js/dist/types/Responses"
 import { Masonry } from "masonic"
 import type { GetServerSidePropsContext } from "next"
 import Trans from "next-translate/Trans"
@@ -10,7 +10,7 @@ import { AccountButtons } from "../components/Navigation/AccountButtons"
 import { useCookie } from "next-cookie"
 
 interface HomeProps {
-    initPosts: PostPopularORSearchResponse
+    initPosts: PostPopularResponse
     loggedIn: boolean
 }
 
@@ -30,7 +30,7 @@ const SinglePost = ({ index, data, width }: any) => {
 
 const Home = ({ initPosts, loggedIn }: HomeProps) => {
     const { t, lang } = useTranslation("home")
-    const [posts, setPosts] = useState<PostPopularORSearchResponse>(initPosts)
+    const [posts, setPosts] = useState<PostPopularResponse>(initPosts)
     const [skip, setSkip] = useState(15)
 
     return (
@@ -83,10 +83,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
         baseURL: process.env.GIFBOX_API!,
     })
 
-    const post: PostPopularORSearchResponse = await client.post.popularPosts(
-        15,
-        0
-    )
+    const post: PostPopularResponse = await client.post.popularPosts(15, 0)
 
     return {
         props: {

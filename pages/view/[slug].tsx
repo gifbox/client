@@ -7,6 +7,7 @@ import Link from "next/link"
 import Button from "../../components/UI/Button"
 import Tag from "../../components/UI/Tag"
 import { CheckCircle } from "@styled-icons/boxicons-solid"
+import Head from "next/head"
 
 interface ViewProps {
     error?: string
@@ -40,66 +41,71 @@ const View = ({ gifUrl, error, data }: ViewProps) => {
     }
 
     return (
-        <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
-            {error ? (
-                <div className="rounded-lg bg-pink-200 p-4 text-center dark:bg-pink-900">
-                    <h1 className="text-4xl font-black">{error}</h1>
-                    <p className="dark:text-gray-300">
-                        {t("common:try_again")}
-                    </p>
-                </div>
-            ) : (
-                <div className="flex flex-col gap-3 xl:flex-row">
-                    <div className="mb-4 flex flex-col">
-                        <div className="md:p-4 xl:mr-4 xl:w-96 xl:rounded-lg xl:bg-blue-50 xl:shadow-black xl:drop-shadow-md xl:dark:bg-slate-800">
-                            <img src={gifUrl} className="xl:w-96" />
-                            <Button
-                                className="mt-4 w-full"
-                                onClick={downloadAsWebp}
-                            >
-                                {t("download_webp")}
-                            </Button>
-                        </div>
+        <>
+            <Head>
+                <meta property="og:video" content={gifUrl} />
+            </Head>
+            <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
+                {error ? (
+                    <div className="rounded-lg bg-pink-200 p-4 text-center dark:bg-pink-900">
+                        <h1 className="text-4xl font-black">{error}</h1>
+                        <p className="dark:text-gray-300">
+                            {t("common:try_again")}
+                        </p>
                     </div>
-                    <div className="flex w-full flex-col gap-1">
-                        <h1 className="mb-4 text-3xl font-black">
-                            {data?.title}
-                        </h1>
-                        <h2 className="text-lg font-bold">{t("tags")}</h2>
-                        <div className="flex flex-wrap gap-2">
-                            {data?.tags.map((tag) => (
-                                <Link
-                                    key={tag}
-                                    href={`/search?q=${encodeURIComponent(
-                                        tag
-                                    )}`}
-                                    locale={lang}
+                ) : (
+                    <div className="flex flex-col gap-3 xl:flex-row">
+                        <div className="mb-4 flex flex-col">
+                            <div className="md:p-4 xl:mr-4 xl:w-96 xl:rounded-lg xl:bg-blue-50 xl:shadow-black xl:drop-shadow-md xl:dark:bg-slate-800">
+                                <img src={gifUrl} className="xl:w-96" />
+                                <Button
+                                    className="mt-4 w-full"
+                                    onClick={downloadAsWebp}
                                 >
-                                    <Tag>{tag}</Tag>
-                                </Link>
-                            ))}
+                                    {t("download_webp")}
+                                </Button>
+                            </div>
                         </div>
-                        <h2 className="mt-4 text-lg font-bold">
-                            {t("author")}
-                        </h2>
-                        <div className="flex w-full items-center rounded-lg bg-blue-50 p-4 dark:bg-slate-800">
-                            <div className="h-12 w-12 rounded-full bg-slate-700"></div>
-                            <h4 className="ml-4 flex items-center text-xl font-bold">
-                                {data?.author.displayName}
-                                {data?.author.verified && (
-                                    <span className="ml-1.5 mb-1 text-blue-500">
-                                        <CheckCircle size={20} />
-                                    </span>
-                                )}
-                            </h4>
-                            <span className="ml-2 text-sm font-normal opacity-50">
-                                @{data?.author.username}
-                            </span>
+                        <div className="flex w-full flex-col gap-1">
+                            <h1 className="mb-4 text-3xl font-black">
+                                {data?.title}
+                            </h1>
+                            <h2 className="text-lg font-bold">{t("tags")}</h2>
+                            <div className="flex flex-wrap gap-2">
+                                {data?.tags.map((tag) => (
+                                    <Link
+                                        key={tag}
+                                        href={`/search?q=${encodeURIComponent(
+                                            tag
+                                        )}`}
+                                        locale={lang}
+                                    >
+                                        <Tag>{tag}</Tag>
+                                    </Link>
+                                ))}
+                            </div>
+                            <h2 className="mt-4 text-lg font-bold">
+                                {t("author")}
+                            </h2>
+                            <div className="flex w-full items-center rounded-lg bg-blue-50 p-4 dark:bg-slate-800">
+                                <div className="h-12 w-12 rounded-full bg-slate-700"></div>
+                                <h4 className="ml-4 flex items-center text-xl font-bold">
+                                    {data?.author.displayName}
+                                    {data?.author.verified && (
+                                        <span className="ml-1.5 mb-1 text-blue-500">
+                                            <CheckCircle size={20} />
+                                        </span>
+                                    )}
+                                </h4>
+                                <span className="ml-2 text-sm font-normal opacity-50">
+                                    @{data?.author.username}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     )
 }
 
