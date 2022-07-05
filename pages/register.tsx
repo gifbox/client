@@ -11,6 +11,7 @@ import { redirect } from "next/dist/server/api-utils"
 import { useCookie } from "next-cookie"
 import { useRouter } from "next/router"
 import { useAppState } from "../lib/useAppState"
+import { observer } from "mobx-react-lite"
 
 interface RegisterProps {
     baseURL: string
@@ -23,7 +24,7 @@ const registerShape = yup.object().shape({
     password: yup.string().min(8).required(),
 })
 
-const Register = ({ baseURL, sessionName }: RegisterProps) => {
+const Register = observer(({ baseURL, sessionName }: RegisterProps) => {
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
@@ -112,7 +113,7 @@ const Register = ({ baseURL, sessionName }: RegisterProps) => {
             </div>
         </div>
     )
-}
+})
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const cookies = useCookie(ctx)
