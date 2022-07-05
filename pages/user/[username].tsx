@@ -45,7 +45,7 @@ const View = ({ apiUrl, error, data }: ViewProps) => {
                 ) : (
                     <div className="flex flex-col gap-3 xl:flex-row xl:gap-28">
                         <div className="mb-4 flex flex-col">
-                            <div className="w-96">
+                            <div className="w-full xl:w-96">
                                 <img
                                     src={
                                         data?.avatar !== null
