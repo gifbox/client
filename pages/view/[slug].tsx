@@ -3,23 +3,33 @@ import useTranslation from "next-translate/useTranslation"
 import { Client, Responses } from "gifbox.js"
 import { redirect } from "next/dist/server/api-utils"
 import GIFNotFound from "../../assets/illustrations/no-such-gif.svg"
+import DefaultPfp from "../../assets/images/default-pfp.png"
 import Link from "next/link"
 import Button from "../../components/UI/Button"
 import Tag from "../../components/UI/Tag"
 import { CheckCircle } from "@styled-icons/boxicons-solid"
 import Head from "next/head"
+import { useRouter } from "next/router"
 
 interface ViewProps {
     error?: string
     gifUrl?: string
+    apiUrl?: string
     data?: Responses.PostInfoResponse
 }
 
-const View = ({ gifUrl, error, data }: ViewProps) => {
+const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
     const { t, lang } = useTranslation("view")
+    const router = useRouter()
 
     const downloadAsWebp = () => {
         window.open(gifUrl, "_blank")
+    }
+
+    const openAuthor = () => {
+        router.push(`/user/${data?.author?.username}`, undefined, {
+            locale: lang,
+        })
     }
 
     if (error === "Post not found") {
@@ -40,10 +50,13 @@ const View = ({ gifUrl, error, data }: ViewProps) => {
         )
     }
 
+    const avatarUrl = `${apiUrl}/file/avatars/${data?.author.avatar?.fileName}`
+
     return (
         <>
             <Head>
                 <meta property="og:video" content={gifUrl} />
+                <meta property="twitter:card" content="summary_large_image" />
             </Head>
             <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
                 {error ? (
@@ -87,8 +100,18 @@ const View = ({ gifUrl, error, data }: ViewProps) => {
                             <h2 className="mt-4 text-lg font-bold">
                                 {t("author")}
                             </h2>
-                            <div className="flex w-full items-center rounded-lg bg-blue-50 p-4 dark:bg-slate-800">
-                                <div className="h-12 w-12 rounded-full bg-slate-700"></div>
+                            <div
+                                className="flex w-full cursor-pointer items-center rounded-lg bg-blue-50 p-4 drop-shadow-none transition-all hover:drop-shadow-xl dark:bg-slate-800"
+                                onClick={openAuthor}
+                            >
+                                <img
+                                    src={
+                                        data?.author.avatar !== null
+                                            ? avatarUrl
+                                            : DefaultPfp.src
+                                    }
+                                    className="h-16 w-16 rounded-full object-cover"
+                                />
                                 <h4 className="ml-4 flex items-center text-xl font-bold">
                                     {data?.author.displayName}
                                     {data?.author.verified && (
@@ -131,6 +154,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
                 gifUrl: `${process.env.GIFBOX_API!}/file/posts/${
                     post.file.fileName
                 }`,
+                apiUrl: process.env.GIFBOX_API!,
                 data: post,
             },
         }

@@ -5,6 +5,7 @@
         "*": ["common"],
         "/": ["home"],
         "/view/[slug]": ["view"],
+        "/user/[username]": ["user"],
         "/login": ["user"],
         "/register": ["user"],
         "/account": ["user"],
