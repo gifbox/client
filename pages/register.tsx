@@ -10,6 +10,7 @@ import UAParser from "ua-parser-js"
 import { redirect } from "next/dist/server/api-utils"
 import { useCookie } from "next-cookie"
 import { useRouter } from "next/router"
+import { useAppState } from "../lib/useAppState"
 
 interface RegisterProps {
     baseURL: string
@@ -28,6 +29,7 @@ const Register = ({ baseURL, sessionName }: RegisterProps) => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const router = useRouter()
+    const state = useAppState()
 
     const { t, lang } = useTranslation("user")
 
@@ -65,6 +67,8 @@ const Register = ({ baseURL, sessionName }: RegisterProps) => {
         try {
             await client.user.register(username, email, password)
             await client.createSession(email, password, sessionName)
+
+            state.updateClientUser(client.clientUser!)
 
             Cookies.set("GIFBOX_TOKEN", client.token!)
 

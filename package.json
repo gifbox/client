@@ -11,6 +11,8 @@
         "gifbox.js": "^0.6.0",
         "js-cookie": "^3.0.1",
         "masonic": "^3.6.5",
+        "mobx": "^6.6.1",
+        "mobx-react-lite": "^3.4.0",
         "next": "latest",
         "next-cookie": "^2.8.0",
         "next-translate": "^1.4.0",

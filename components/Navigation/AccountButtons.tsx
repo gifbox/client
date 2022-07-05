@@ -1,27 +1,21 @@
-import { useEffect, useState } from "react"
 import Button from "../UI/Button"
 import Spinner from "../UI/Spinner"
 import useTranslation from "next-translate/useTranslation"
-import Cookies from "js-cookie"
+import { observer } from "mobx-react-lite"
+import { useAppState } from "../../lib/useAppState"
 
-export const AccountButtons = () => {
+export const AccountButtons = observer(() => {
     const { t } = useTranslation("common")
-    const [hasLoaded, setHasLoaded] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const state = useAppState()
 
-    useEffect(() => {
-        setIsLoggedIn(!!Cookies.get("GIFBOX_TOKEN"))
-        setHasLoaded(true)
-    })
-
-    if (!hasLoaded) {
+    if (!state.finishedAutoLoadingUser) {
         return <Spinner />
     }
 
-    if (isLoggedIn) {
+    if (state.clientUser !== null) {
         return (
             <Button variant="transparent" href="/account">
-                {t("account")}
+                {state.clientUser?.displayName}
             </Button>
         )
     }
@@ -34,4 +28,4 @@ export const AccountButtons = () => {
             </Button>
         </div>
     )
-}
+})

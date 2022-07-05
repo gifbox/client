@@ -1,4 +1,3 @@
-import type { NextPage } from "next"
 import useTranslation from "next-translate/useTranslation"
 import Cookies from "js-cookie"
 import { useRouter } from "next/router"
@@ -8,15 +7,18 @@ import Spinner from "../components/UI/Spinner"
 import Button from "../components/UI/Button"
 import Trans from "next-translate/Trans"
 import AccountDataSettings from "../components/Sections/AccountDataSettings"
+import { observer } from "mobx-react-lite"
+import { useAppState } from "../lib/useAppState"
 
 interface AccountProps {
     baseURL: string
     dataHandler: string
 }
 
-const Account = ({ baseURL, dataHandler }: AccountProps) => {
+const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
     const { t, lang } = useTranslation("user")
     const router = useRouter()
+    const state = useAppState()
 
     const [isLoading, setIsLoading] = useState(true)
     const [self, setSelf] = useState<ClientUser>()
@@ -47,6 +49,7 @@ const Account = ({ baseURL, dataHandler }: AccountProps) => {
 
     const logOut = () => {
         client?.logout().then(() => {
+            state.updateClientUser(null!)
             Cookies.remove("GIFBOX_TOKEN")
             router.push("/login", undefined, { locale: lang })
         })
@@ -110,7 +113,7 @@ const Account = ({ baseURL, dataHandler }: AccountProps) => {
                         <span className="font-bold" />,
                     ]}
                     values={{
-                        data_handler: dataHandler,
+                        data_handler: state.environment.dataHandlerEmail,
                     }}
                 />
                 <h3 className="pb-3 text-xl font-bold">
@@ -132,7 +135,7 @@ const Account = ({ baseURL, dataHandler }: AccountProps) => {
             </div>
         </div>
     )
-}
+})
 
 export async function getServerSideProps() {
     return {
