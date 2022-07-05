@@ -1,12 +1,12 @@
 @import url("https://rsms.me/inter/inter.css");
 
 :root {
-    --font-inter: "Inter", sans-serif;
+    --gbx-font-inter: "Inter", sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
     :root {
-        --font-inter: "Inter var", sans-serif;
+        --gbx-font-inter: "Inter var", sans-serif;
     }
 }
 

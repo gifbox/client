@@ -5,7 +5,7 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+            sans: ["var(--gbx-font-inter)", "system-ui", "sans-serif"],
         },
     },
     plugins: [],
