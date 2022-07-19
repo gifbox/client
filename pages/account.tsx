@@ -9,6 +9,12 @@ import Trans from "next-translate/Trans"
 import AccountDataSettings from "../components/Sections/AccountDataSettings"
 import { observer } from "mobx-react-lite"
 import { useAppState } from "../lib/useAppState"
+import { RightArrowCircle } from "@styled-icons/boxicons-solid"
+import { toast } from "react-hot-toast"
+import {
+    SessionCurrentResponse,
+    SessionListResponse,
+} from "gifbox.js/dist/types/Responses"
 
 interface AccountProps {
     baseURL: string
@@ -24,6 +30,9 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
     const [self, setSelf] = useState<ClientUser>()
     const [client, setClient] = useState<Client | null>(null)
     const [currentUsername, setCurrentUsername] = useState<string>("")
+    const [sessions, setSessions] = useState<SessionListResponse>()
+    const [currentSession, setCurrentSession] =
+        useState<SessionCurrentResponse>()
 
     useEffect(() => {
         if (!Cookies.get("GIFBOX_TOKEN"))
@@ -37,10 +46,15 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
 
         client
             .loginBearer(Cookies.get("GIFBOX_TOKEN")!)
-            .then(() => {
+            .then(async () => {
                 setSelf(client.clientUser!)
                 setCurrentUsername(client.clientUser?.displayName!)
                 setIsLoading(false)
+
+                const currentSession = await client.getCurrentSession()
+                setCurrentSession(currentSession)
+                const sessionList = await client.getSessions()
+                setSessions(sessionList)
             })
             .catch(() => {
                 router.push("/login", undefined, { locale: lang })
@@ -52,6 +66,19 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
             state.updateClientUser(null!)
             Cookies.remove("GIFBOX_TOKEN")
             router.push("/login", undefined, { locale: lang })
+        })
+    }
+
+    const logOutById = (sessionId: string) => {
+        if (currentSession?._id === sessionId) return logOut()
+
+        client?.deleteSession(sessionId)
+        setSessions(sessions?.filter((x) => x._id !== sessionId))
+    }
+
+    const underConstruction = () => {
+        toast(t("common:under_construction"), {
+            position: "bottom-center",
         })
     }
 
@@ -76,6 +103,48 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
                     gifboxClient={client!}
                     setCurrentUsername={setCurrentUsername}
                 />
+            </div>
+            <div className="block py-2">
+                <h2 className="py-3 text-2xl font-bold" id="sessions">
+                    {t("sessions.heading")}
+                </h2>
+                <div className="flex flex-col gap-3 pb-3">
+                    {sessions?.map((session) => (
+                        <div
+                            className="flex w-full flex-col items-center justify-between rounded-lg bg-gray-50 p-4 dark:bg-slate-800 md:flex-row"
+                            key={session._id}
+                        >
+                            <div className="block text-center md:text-left">
+                                <h4 className="text-xl font-bold">
+                                    {session.sessionName}
+                                </h4>
+                                <span className="inline text-sm font-normal opacity-50">
+                                    {session._id}
+                                </span>
+                            </div>
+                            <div className="flex w-full flex-col items-center gap-3 md:w-auto md:flex-row">
+                                {session._id === currentSession?._id && (
+                                    <span className="mt-4 flex flex-row items-center gap-1 font-normal text-green-700 dark:text-green-500 md:mt-0">
+                                        <RightArrowCircle size={20} />{" "}
+                                        {t("sessions.current")}
+                                    </span>
+                                )}
+                                <Button
+                                    variant="transparent"
+                                    onClick={underConstruction}
+                                >
+                                    {t("sessions.rename")}
+                                </Button>
+                                <Button
+                                    variant="danger"
+                                    onClick={() => logOutById(session._id)}
+                                >
+                                    {t("log_out.generic")}
+                                </Button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="block py-2">
                 <h2 className="py-3 text-2xl font-bold">
