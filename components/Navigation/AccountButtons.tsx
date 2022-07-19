@@ -24,9 +24,7 @@ export const AccountButtons = observer(() => {
             >
                 <img
                     src={
-                        state.clientUser?.avatar !== null
-                            ? avatarUrl
-                            : DefaultPfp.src
+                        !!state.clientUser?.avatar ? avatarUrl : DefaultPfp.src
                     }
                     className="pointer-events-none h-6 w-6 rounded-full object-cover"
                 />

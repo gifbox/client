@@ -702,7 +702,7 @@ defined@^1.0.0:
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
-  integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
+  integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
 detective@^5.2.0:
   version "5.2.0"
@@ -764,9 +764,9 @@ fill-range@^7.0.1:
     to-regex-range "^5.0.1"
 
 follow-redirects@^1.14.4:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.0.tgz#06441868281c86d0dda4ad8bdaead2d02dca89d4"
-  integrity sha512-aExlJShTV4qOUOL7yF1U5tvLCB0xQuudbf6toyYA0E/acBNw71mvjFTnLaRp50aQaYocMR0a/RMMBIHeZnGyjQ==
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
+  integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
 
 form-data@^4.0.0:
   version "4.0.0"
@@ -792,10 +792,10 @@ function-bind@^1.1.1:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
 
-gifbox.js@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/gifbox.js/-/gifbox.js-0.6.0.tgz#7dfe1a1c57b51a4c6be91765d679b86169f636b4"
-  integrity sha512-mTQ9oybnsJfYfExwfL/hbA0PJDBPkVUNd8jMTZ1Fk7JUeiHLJZpJ6UhgC2xQJDufhX47DeBLEOGsyCQ2g2YYNQ==
+gifbox.js@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/gifbox.js/-/gifbox.js-0.8.1.tgz#c643edee0f0cc22917a2a6eb75ceea2369d8fa15"
+  integrity sha512-v5p2sb4BrDGYbN2a/MOYdNVNrqt8cyELwQkFpZpxRdH6bd3NvFmqlnxRO8u0C3fhXOu0jvzGjpezOtUrV9wREw==
   dependencies:
     axios "^0.24.0"
     form-data "^4.0.0"

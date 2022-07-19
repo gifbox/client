@@ -26,6 +26,12 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
         window.open(gifUrl, "_blank")
     }
 
+    const copyLink = () => {
+        navigator.clipboard
+            .writeText(window.location.toString())
+            .catch(() => {})
+    }
+
     const openAuthor = () => {
         router.push(`/user/${data?.author?.username}`, undefined, {
             locale: lang,
@@ -77,12 +83,22 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
                                 >
                                     {t("download_webp")}
                                 </Button>
+                                <Button
+                                    className="mt-2 w-full"
+                                    onClick={copyLink}
+                                    variant="transparent"
+                                >
+                                    {t("copy_url")}
+                                </Button>
                             </div>
                         </div>
                         <div className="flex w-full flex-col gap-1">
-                            <h1 className="mb-4 text-3xl font-black">
+                            <h1 className="text-3xl font-black">
                                 {data?.title}
                             </h1>
+                            <h2 className="mb-4 text-lg">
+                                {t("views", { count: data?.views })}
+                            </h2>
                             <h2 className="text-lg font-bold">{t("tags")}</h2>
                             <div className="flex flex-wrap gap-2">
                                 {data?.tags.map((tag) => (
