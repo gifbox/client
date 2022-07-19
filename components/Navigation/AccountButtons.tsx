@@ -28,7 +28,7 @@ export const AccountButtons = observer(() => {
                             ? avatarUrl
                             : DefaultPfp.src
                     }
-                    className="h-6 w-6 rounded-full object-cover"
+                    className="pointer-events-none h-6 w-6 rounded-full object-cover"
                 />
                 {state.clientUser?.displayName}
             </Button>

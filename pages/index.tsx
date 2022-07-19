@@ -33,7 +33,6 @@ const CSRMasonry = dynamic(async () => Masonry, {
 const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
     const { t } = useTranslation("home")
     const [posts, setPosts] = useState<PostPopularResponse>([])
-    const [gbClient, setGbClient] = useState<Client | null>(null)
     const [reachedEnd, setReachedEnd] = useState(false)
 
     useEffect(() => {
@@ -50,12 +49,9 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
         const limit = startIndex + stopIndex
         if (limit > 100) return
 
-        if (!gbClient)
-            setGbClient(
-                new Client({
-                    baseURL: apiUrl,
-                })
-            )
+        const gbClient = new Client({
+            baseURL: apiUrl,
+        })
 
         const newPosts = await gbClient?.post.popularPosts(limit, startIndex)!
 

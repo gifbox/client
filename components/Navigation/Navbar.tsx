@@ -3,8 +3,9 @@ import LogoColor from "../../assets/logos/logo-color.svg"
 import useTranslation from "next-translate/useTranslation"
 import { AccountButtons } from "./AccountButtons"
 import { Menu } from "@styled-icons/boxicons-regular"
-import { useState } from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/router"
+import SearchBar from "../UI/SearchBar"
 
 interface NavLinkProps {
     to: string
@@ -71,6 +72,7 @@ const Navbar = () => {
                     />
                     <NavbarPages />
                 </div>
+                <SearchBar />
                 <div className="pr-4">
                     <AccountButtons />
                 </div>

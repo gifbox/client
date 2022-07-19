@@ -9,6 +9,7 @@
         "/login": ["user"],
         "/register": ["user"],
         "/account": ["user"],
-        "/new": ["new"]
+        "/new": ["new"],
+        "/search": ["search"]
     }
 }
