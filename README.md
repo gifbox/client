@@ -23,7 +23,7 @@ Build for deployment consumption
 $ yarn build
 ```
 
-Start app build in last step
+Start app built in the last step
 
 ```
 $ yarn start
