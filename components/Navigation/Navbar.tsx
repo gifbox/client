@@ -72,7 +72,7 @@ const Navbar = () => {
                     />
                     <NavbarPages />
                 </div>
-                <SearchBar />
+                <SearchBar className="w-1/2" />
                 <div className="pr-4">
                     <AccountButtons />
                 </div>
@@ -100,6 +100,7 @@ const Navbar = () => {
                         showExtendedMobile ? "flex md:hidden" : "hidden"
                     } z-20 flex-col gap-3 p-4`}
                 >
+                    <SearchBar />
                     <AccountButtons />
                     <NavbarPages hideBar={setShowExtendedMobile} />
                 </aside>

@@ -20,7 +20,7 @@ export const SearchField = ({ className, ...props }: SearchBarProps) => {
     )
 }
 
-const SearchBar = () => {
+const SearchBar = (props: SearchBarProps) => {
     const { t, lang } = useTranslation("common")
     const router = useRouter()
 
@@ -47,11 +47,11 @@ const SearchBar = () => {
 
     return (
         <SearchField
-            className="w-1/2"
             placeholder={t("search")}
             onChange={updateQuery}
             onKeyPress={handleKeyPress}
             value={query}
+            {...props}
         />
     )
 }
