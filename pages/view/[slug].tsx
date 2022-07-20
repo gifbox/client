@@ -76,7 +76,7 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
                     <div className="flex flex-col gap-3 xl:flex-row">
                         <div className="mb-4 flex flex-col">
                             <div className="md:p-4 xl:mr-4 xl:w-96 xl:rounded-lg xl:bg-blue-50 xl:shadow-black xl:drop-shadow-md xl:dark:bg-slate-800">
-                                <img src={gifUrl} className="xl:w-96" />
+                                <img src={gifUrl} className="w-full xl:w-96" />
                                 <Button
                                     className="mt-4 w-full"
                                     onClick={downloadAsWebp}

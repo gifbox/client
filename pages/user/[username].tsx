@@ -52,7 +52,7 @@ const View = ({ apiUrl, error, data }: ViewProps) => {
                                             ? avatarUrl
                                             : DefaultPfp.src
                                     }
-                                    className="aspect-square cursor-pointer rounded-full object-cover drop-shadow-none transition-all hover:drop-shadow-xl"
+                                    className="aspect-square w-full cursor-pointer rounded-full object-cover drop-shadow-none transition-all hover:drop-shadow-xl"
                                     onClick={openAvatar}
                                 />
                             </div>

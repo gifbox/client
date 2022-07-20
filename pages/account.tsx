@@ -2,19 +2,22 @@ import useTranslation from "next-translate/useTranslation"
 import Cookies from "js-cookie"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { Client, ClientUser } from "gifbox.js"
+import { Client } from "gifbox.js"
+import DefaultPfp from "../assets/images/default-pfp.png"
 import Spinner from "../components/UI/Spinner"
 import Button from "../components/UI/Button"
 import Trans from "next-translate/Trans"
 import AccountDataSettings from "../components/Sections/AccountDataSettings"
 import { observer } from "mobx-react-lite"
 import { useAppState } from "../lib/useAppState"
-import { RightArrowCircle } from "@styled-icons/boxicons-solid"
+import { CheckCircle, RightArrowCircle } from "@styled-icons/boxicons-solid"
 import { toast } from "react-hot-toast"
 import {
     SessionCurrentResponse,
     SessionListResponse,
 } from "gifbox.js/dist/types/Responses"
+import Modal, { ModalCloseButton } from "../components/UI/Modal"
+import FileButton from "../components/UI/FileButton"
 
 interface AccountProps {
     baseURL: string
@@ -27,12 +30,16 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
     const state = useAppState()
 
     const [isLoading, setIsLoading] = useState(true)
-    const [self, setSelf] = useState<ClientUser>()
     const [client, setClient] = useState<Client | null>(null)
-    const [currentUsername, setCurrentUsername] = useState<string>("")
     const [sessions, setSessions] = useState<SessionListResponse>()
     const [currentSession, setCurrentSession] =
         useState<SessionCurrentResponse>()
+
+    const [avatarModalOpen, setAvatarModalOpen] = useState(false)
+    const [avatarFile, setAvatarFile] = useState<File | null>(null)
+    const [avatarPreviewLoading, setAvatarPreviewLoading] = useState(false)
+    const [avatarAsDataUrl, setAvatarAsDataUrl] = useState<string | null>(null)
+    const [avatarError, setAvatarError] = useState<string | null>(null)
 
     useEffect(() => {
         if (!Cookies.get("GIFBOX_TOKEN"))
@@ -47,8 +54,6 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
         client
             .loginBearer(Cookies.get("GIFBOX_TOKEN")!)
             .then(async () => {
-                setSelf(client.clientUser!)
-                setCurrentUsername(client.clientUser?.displayName!)
                 setIsLoading(false)
 
                 const currentSession = await client.getCurrentSession()
@@ -82,7 +87,62 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
         })
     }
 
-    if (isLoading || !self) {
+    const acceptAvatar = (file: File) => {
+        setAvatarFile(file)
+        setAvatarPreviewLoading(true)
+
+        const data = new FileReader()
+
+        data.addEventListener("load", () => {
+            setAvatarAsDataUrl(data.result as string)
+            setAvatarPreviewLoading(false)
+        })
+
+        data.readAsDataURL(file)
+    }
+
+    const resetAvatarData = () => {
+        setAvatarModalOpen(false)
+        setAvatarFile(null)
+        setAvatarPreviewLoading(false)
+        setAvatarAsDataUrl(null)
+        setAvatarError(null)
+    }
+
+    const uploadAvatar = async () => {
+        setAvatarError("")
+        setAvatarPreviewLoading(true)
+        try {
+            await client?.setAvatar(avatarFile)
+            await client?.modifySelf({})
+            resetAvatarData()
+
+            toast(t("saved"), {
+                icon: <CheckCircle size={20} />,
+            })
+
+            state.updateClientUser(client?.clientUser!)
+        } catch (e: any) {
+            const errorText = e?.response?.data?.error ?? String(e)
+            setAvatarError(errorText)
+            setAvatarPreviewLoading(false)
+        }
+    }
+
+    const deleteAvatar = async () => {
+        await client?.unsetAvatar()
+        await client?.modifySelf({})
+
+        resetAvatarData()
+
+        toast(t("saved"), {
+            icon: <CheckCircle size={20} />,
+        })
+
+        state.updateClientUser(client?.clientUser!)
+    }
+
+    if (isLoading || !state.clientUser) {
         return (
             <div className="flex h-72 items-center justify-center">
                 <Spinner />
@@ -93,16 +153,83 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
     return (
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
             <h1 className="mt-12 pb-4 text-4xl font-black lg:text-6xl">
-                {t("hello", { name: currentUsername })}
+                {t("hello", { name: state.clientUser.displayName })}
             </h1>
+            <h2 className="py-3 text-2xl font-bold">{t("avatar.heading")}</h2>
+            <div className="flex flex-col gap-3 xl:flex-row xl:gap-28">
+                <div className="mb-4 flex flex-col">
+                    <div className="w-full xl:w-96">
+                        <img
+                            src={
+                                state.clientUser?.avatar !== null
+                                    ? `${baseURL}/file/avatars/${state.clientUser?.avatar.fileName}`
+                                    : DefaultPfp.src
+                            }
+                            className="pointer-events-none aspect-square w-full rounded-full object-cover"
+                        />
+                    </div>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-1">
+                    <Button onClick={() => setAvatarModalOpen(true)}>
+                        {t("avatar.change")}
+                    </Button>
+                </div>
+            </div>
+            <Modal
+                show={avatarModalOpen}
+                onHide={() => setAvatarModalOpen(false)}
+            >
+                <>
+                    <ModalCloseButton hide={resetAvatarData} />
+                    <div className="flex flex-col items-center justify-center">
+                        <h2 className="py-3 text-2xl font-bold">
+                            {t("avatar.modal_heading")}
+                        </h2>
+                        <p className="block pb-3 text-gray-800 dark:text-gray-300">
+                            {t("avatar.formats")}
+                        </p>
+                        <div className="py-5">
+                            <FileButton
+                                acceptFile={acceptAvatar}
+                                accept="image/gif"
+                            />
+                        </div>
+                        {avatarPreviewLoading ? (
+                            <Spinner />
+                        ) : (
+                            avatarAsDataUrl && (
+                                <>
+                                    <img
+                                        alt={avatarFile?.name}
+                                        src={avatarAsDataUrl}
+                                        className="pointer-events-none aspect-square w-full rounded-full object-cover xl:w-96"
+                                    />
+                                </>
+                            )
+                        )}
+                        <div className="mt-4 flex flex-col gap-3 md:flex-row">
+                            <Button onClick={uploadAvatar}>
+                                {t("customize.set")}
+                            </Button>
+                            {state.clientUser?.avatar !== null && (
+                                <Button onClick={deleteAvatar} variant="danger">
+                                    {t("avatar.unset")}
+                                </Button>
+                            )}
+                        </div>
+                        {avatarError && (
+                            <div className="mt-4 rounded bg-red-500 p-3 text-white drop-shadow-xl">
+                                {avatarError}
+                            </div>
+                        )}
+                    </div>
+                </>
+            </Modal>
             <div className="block py-2">
                 <h2 className="py-3 text-2xl font-bold">
                     {t("customize.heading")}
                 </h2>
-                <AccountDataSettings
-                    gifboxClient={client!}
-                    setCurrentUsername={setCurrentUsername}
-                />
+                <AccountDataSettings gifboxClient={client!} />
             </div>
             <div className="block py-2">
                 <h2 className="py-3 text-2xl font-bold" id="sessions">
