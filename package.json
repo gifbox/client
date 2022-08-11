@@ -13,7 +13,7 @@
         "masonic": "^3.6.5",
         "mobx": "^6.6.1",
         "mobx-react-lite": "^3.4.0",
-        "next": "latest",
+        "next": "^12.2.4",
         "next-cookie": "^2.8.0",
         "next-translate": "^1.4.0",
         "react": "^17.0.2",
