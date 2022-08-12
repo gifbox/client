@@ -5,6 +5,8 @@ import DefaultPfp from "../../assets/images/default-pfp.png"
 import { CheckCircle } from "@styled-icons/boxicons-solid"
 import Head from "next/head"
 import PNF from "../404"
+import MetaTitle from "../../components/Metadata/MetaTitle"
+import MetaDescription from "../../components/Metadata/MetaDescription"
 
 interface ViewProps {
     error?: string
@@ -27,6 +29,12 @@ const View = ({ apiUrl, error, data }: ViewProps) => {
 
     return (
         <>
+            {data && (
+                <>
+                    <MetaTitle>{data.displayName}</MetaTitle>
+                    <MetaDescription>{data.description}</MetaDescription>
+                </>
+            )}
             <Head>
                 {data?.avatar !== null && (
                     <>

@@ -18,6 +18,7 @@ import {
 } from "gifbox.js/dist/types/Responses"
 import Modal, { ModalCloseButton } from "../components/UI/Modal"
 import FileButton from "../components/UI/FileButton"
+import MetaTitle from "../components/Metadata/MetaTitle"
 
 interface AccountProps {
     baseURL: string
@@ -152,6 +153,7 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
 
     return (
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
+            <MetaTitle>{t("common:account")}</MetaTitle>
             <h1 className="mt-12 pb-4 text-4xl font-black lg:text-6xl">
                 {t("hello", { name: state.clientUser.displayName })}
             </h1>

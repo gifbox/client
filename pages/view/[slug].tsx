@@ -10,6 +10,8 @@ import Tag from "../../components/UI/Tag"
 import { CheckCircle } from "@styled-icons/boxicons-solid"
 import Head from "next/head"
 import { useRouter } from "next/router"
+import MetaTitle from "../../components/Metadata/MetaTitle"
+import MetaDescription from "../../components/Metadata/MetaDescription"
 
 interface ViewProps {
     error?: string
@@ -60,6 +62,12 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
 
     return (
         <>
+            {data && (
+                <>
+                    <MetaTitle>{data.title}</MetaTitle>
+                    <MetaDescription> </MetaDescription>
+                </>
+            )}
             <Head>
                 <meta property="og:image" content={gifUrl} />
             </Head>

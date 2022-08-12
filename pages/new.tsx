@@ -10,6 +10,7 @@ import GifUploadSettings from "../components/Sections/GifUploadSettings"
 import { redirect } from "next/dist/server/api-utils"
 import { useCookie } from "next-cookie"
 import { GetServerSidePropsContext, NextApiResponse } from "next"
+import MetaTitle from "../components/Metadata/MetaTitle"
 
 interface NewProps {
     baseURL: string
@@ -75,6 +76,7 @@ const New = ({ baseURL }: NewProps) => {
 
     return (
         <div className="flex flex-col items-center justify-center py-28 text-center">
+            <MetaTitle>{t("common:pages.new")}</MetaTitle>
             <img
                 alt="404"
                 src={Illustration.src}

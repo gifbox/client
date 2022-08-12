@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import Spinner from "../components/UI/Spinner"
 import SearchBar from "../components/UI/SearchBar"
+import MetaTitle from "../components/Metadata/MetaTitle"
 
 interface HomeProps {
     apiUrl: string
@@ -114,6 +115,7 @@ const Search = ({ apiUrl }: HomeProps) => {
 
     return (
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
+            <MetaTitle>{q as string}</MetaTitle>
             <SearchBar className="mb-4 w-full md:hidden" />
             <h2 className="mb-3 text-3xl font-black">
                 {t("results", { query: q })}
