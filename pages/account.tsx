@@ -193,7 +193,7 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
                         <div className="py-5">
                             <FileButton
                                 acceptFile={acceptAvatar}
-                                accept="image/gif"
+                                accept="image/png,image/jpeg,image/webp,image/gif"
                             />
                         </div>
                         {avatarPreviewLoading ? (
