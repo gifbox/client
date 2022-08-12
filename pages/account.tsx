@@ -210,9 +210,11 @@ const Account = observer(({ baseURL, dataHandler }: AccountProps) => {
                             )
                         )}
                         <div className="mt-4 flex flex-col gap-3 md:flex-row">
-                            <Button onClick={uploadAvatar}>
-                                {t("customize.set")}
-                            </Button>
+                            {avatarAsDataUrl && (
+                                <Button onClick={uploadAvatar}>
+                                    {t("customize.set")}
+                                </Button>
+                            )}
                             {state.clientUser?.avatar !== null && (
                                 <Button onClick={deleteAvatar} variant="danger">
                                     {t("avatar.unset")}
