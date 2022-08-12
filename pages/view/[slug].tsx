@@ -61,8 +61,7 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
     return (
         <>
             <Head>
-                <meta property="og:video" content={gifUrl} />
-                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="og:image" content={gifUrl} />
             </Head>
             <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
                 {error ? (
