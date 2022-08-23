@@ -7,9 +7,8 @@ import Cookies from "js-cookie"
 import { useRouter } from "next/router"
 import Spinner from "../components/UI/Spinner"
 import GifUploadSettings from "../components/Sections/GifUploadSettings"
-import { redirect } from "next/dist/server/api-utils"
 import { useCookie } from "next-cookie"
-import { GetServerSidePropsContext, NextApiResponse } from "next"
+import { GetServerSideProps } from "next"
 import MetaTitle from "../components/Metadata/MetaTitle"
 
 interface NewProps {
@@ -118,12 +117,16 @@ const New = ({ baseURL }: NewProps) => {
     )
 }
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<NewProps> = async (ctx) => {
     const cookies = useCookie(ctx)
 
     if (!cookies.has("GIFBOX_TOKEN")) {
-        redirect(ctx.res as NextApiResponse, 302, "/login")
-        return {}
+        return {
+            redirect: {
+                destination: ctx.locale ? `/${ctx.locale}/login` : "/login",
+                permanent: false,
+            },
+        }
     }
 
     return {
