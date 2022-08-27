@@ -9,7 +9,7 @@ const ISE: NextPage = () => {
     return (
         <>
             <MetaTitle>{t("error_pages.internal")}</MetaTitle>
-            <div className="flex flex-col items-center justify-center py-28 text-center">
+            <div className="flex flex-col items-center justify-center py-48 text-center">
                 <img
                     alt="Internal Server Error"
                     src={Illustration.src}

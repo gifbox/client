@@ -75,7 +75,7 @@ const Login = observer(({ baseURL, sessionName }: LoginProps) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex flex-col items-center justify-center py-36 text-center">
             <div className="block w-full rounded-lg py-10 px-4 shadow-black drop-shadow-xl md:w-auto md:bg-blue-100 md:px-10 md:dark:bg-gray-900">
                 <h1 className="text-2xl font-black">{t("common:login")}</h1>
                 <TextInput

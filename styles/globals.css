@@ -10,6 +10,23 @@
     }
 }
 
+.svg-path-revolt-logo {
+    fill: #ff4655;
+    stroke: #ff4655;
+}
+
+.svg-path-gifbox-segment-a {
+    fill: #0085ff;
+}
+
+.svg-path-gifbox-segment-b {
+    fill: #0070e9;
+}
+
+.svg-path-gifbox-segment-c {
+    fill: #3399ff;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

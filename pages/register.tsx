@@ -82,7 +82,7 @@ const Register = observer(({ baseURL, sessionName }: RegisterProps) => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex h-full flex-col items-center justify-center py-28 text-center">
             <div className="block w-full rounded-lg py-10 px-4 shadow-black drop-shadow-xl md:w-auto md:bg-blue-100 md:px-10 md:dark:bg-gray-900">
                 <h1 className="text-2xl font-black">{t("common:register")}</h1>
                 <TextInput
