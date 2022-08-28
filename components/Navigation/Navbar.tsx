@@ -22,7 +22,7 @@ const NavLink = ({ to, lang, children, hideBar }: NavLinkProps) => {
     return (
         <Link href={to} lang={lang}>
             <a
-                className="transition-all md:hover:font-black md:hover:text-blue-500 md:dark:hover:text-blue-400"
+                className="transition-all md:hover:font-bold md:hover:text-blue-500 md:dark:hover:text-blue-400"
                 onClick={setFalse}
             >
                 {children}

@@ -1,12 +1,20 @@
 @import url("https://rsms.me/inter/inter.css");
 
+@import url("~@fontsource/metropolis/300.css");
+@import url("~@fontsource/metropolis/400.css");
+@import url("~@fontsource/metropolis/500.css");
+@import url("~@fontsource/metropolis/700.css");
+@import url("~@fontsource/metropolis/800.css");
+@import url("~@fontsource/metropolis/900.css");
+
 :root {
-    --gbx-font-inter: "Inter", sans-serif;
+    --gbx-font-sans: "Inter", sans-serif;
+    --gbx-font-header: "Metropolis", sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
     :root {
-        --gbx-font-inter: "Inter var", sans-serif;
+        --gbx-font-sans: "Inter var", sans-serif;
     }
 }
 

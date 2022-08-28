@@ -105,7 +105,7 @@ const Search = ({ apiUrl }: HomeProps) => {
     if (!q) {
         return (
             <div className="flex flex-col items-center justify-center py-28 text-center">
-                <h1 className="mt-12 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text pb-4 text-2xl font-black text-transparent sm:text-4xl lg:text-6xl">
+                <h1 className="mt-12 bg-gradient-to-r from-indigo-500 to-pink-600 bg-clip-text pb-4 font-header text-2xl font-bold tracking-wide text-transparent sm:text-4xl lg:text-6xl">
                     {t("no_query")}
                 </h1>
                 <p className="mt-4 text-gray-500">{t("nothing")}</p>
@@ -117,7 +117,7 @@ const Search = ({ apiUrl }: HomeProps) => {
         <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
             <MetaTitle>{q as string}</MetaTitle>
             <SearchBar className="mb-4 w-full md:hidden" />
-            <h2 className="mb-3 text-3xl font-black">
+            <h2 className="mb-3 font-header text-3xl font-bold tracking-wide">
                 {t("results", { query: q })}
             </h2>
             {initialResponse !== null && posts.length >= 1 && (

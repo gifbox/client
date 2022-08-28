@@ -45,13 +45,13 @@ const View = ({ apiUrl, error, data }: ViewProps) => {
             <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
                 {error ? (
                     <div className="rounded-lg bg-pink-200 p-4 text-center dark:bg-pink-900">
-                        <h1 className="text-4xl font-black">{error}</h1>
+                        <h1 className="text-4xl font-bold">{error}</h1>
                         <p className="dark:text-gray-300">
                             {t("common:try_again")}
                         </p>
                     </div>
                 ) : (
-                    <div className="flex flex-col gap-3 xl:flex-row xl:gap-28">
+                    <div className="flex flex-col gap-3 xl:flex-row xl:gap-16">
                         <div className="mb-4 flex flex-col">
                             <div className="w-full xl:w-96">
                                 <img
@@ -65,8 +65,8 @@ const View = ({ apiUrl, error, data }: ViewProps) => {
                                 />
                             </div>
                         </div>
-                        <div className="flex w-full flex-col gap-1">
-                            <h1 className="text-3xl font-black xl:text-4xl">
+                        <div className="flex w-full flex-col justify-center gap-1">
+                            <h1 className="font-header text-3xl font-bold tracking-wide xl:text-4xl">
                                 {data?.displayName}
                                 {data?.verified && (
                                     <span className="ml-1.5 mb-1 text-blue-500">

@@ -6,6 +6,7 @@
         "start": "next start"
     },
     "dependencies": {
+        "@fontsource/metropolis": "^4.5.3",
         "@styled-icons/boxicons-regular": "^10.38.0",
         "@styled-icons/boxicons-solid": "^10.38.0",
         "gifbox.js": "^0.8.1",

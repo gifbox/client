@@ -181,6 +181,11 @@
   dependencies:
     "@essentials/raf" "^1.2.0"
 
+"@fontsource/metropolis@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/metropolis/-/metropolis-4.5.3.tgz#6c79588e150fce90dd0890dbd196e173aa89bd9f"
+  integrity sha512-jxtbEVaYriPYYaFk9uyt/K+cJISEBQsxoFvCCugoqqkgHpMUUJSrMvS741F15h5+xbGTsgBTBv+pxrvn52TsRw==
+
 "@jridgewell/gen-mapping@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.1.tgz#cf92a983c83466b8c0ce9124fadeaf09f7c66ea9"

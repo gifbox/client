@@ -81,7 +81,7 @@ const New = ({ baseURL }: NewProps) => {
                 src={Illustration.src}
                 className="pointer-events-none w-32 drop-shadow-xl"
             />
-            <h1 className="mt-12 bg-gradient-to-l from-pink-500 to-indigo-500 bg-clip-text pb-4 text-2xl font-black text-transparent sm:text-3xl lg:text-6xl">
+            <h1 className="mt-12 bg-gradient-to-l from-pink-500 to-indigo-500 bg-clip-text pb-4 font-header text-2xl font-bold tracking-wide text-transparent sm:text-3xl lg:text-6xl">
                 {t("heading")}
             </h1>
             <p className="mt-4">{t("subheading")}</p>

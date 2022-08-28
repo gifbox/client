@@ -48,7 +48,7 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
                     src={GIFNotFound.src}
                     className="pointer-events-none w-24"
                 />
-                <h1 className="mt-12 pb-4 text-2xl font-black text-blue-600 sm:text-4xl">
+                <h1 className="mt-12 pb-4 font-header text-2xl font-bold tracking-wide text-blue-600 sm:text-4xl">
                     {t("common:error_pages.gif_not_found.title")}
                 </h1>
                 <p className="text-gray-500">
@@ -74,7 +74,9 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
             <div className="mx-auto w-11/12 md:w-4/5 xl:w-3/4">
                 {error ? (
                     <div className="rounded-lg bg-pink-200 p-4 text-center dark:bg-pink-900">
-                        <h1 className="text-4xl font-black">{error}</h1>
+                        <h1 className="font-header text-4xl font-normal tracking-wide">
+                            {error}
+                        </h1>
                         <p className="dark:text-gray-300">
                             {t("common:try_again")}
                         </p>
@@ -100,7 +102,7 @@ const View = ({ gifUrl, apiUrl, error, data }: ViewProps) => {
                             </div>
                         </div>
                         <div className="flex w-full flex-col gap-1">
-                            <h1 className="text-3xl font-black">
+                            <h1 className="font-header text-3xl font-bold tracking-wide">
                                 {data?.title}
                             </h1>
                             <h2 className="mb-4 text-lg">

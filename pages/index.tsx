@@ -82,7 +82,7 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
             {loggedIn ? (
                 <div className="w-full">
                     <div className="mb-7 flex flex-col items-center justify-center rounded-lg bg-blue-100 py-10 px-10 text-center dark:bg-slate-800">
-                        <p className="text-3xl font-bold">
+                        <p className="font-header text-3xl font-bold">
                             {t("in_progress.hey")}
                         </p>
                         <Trans
@@ -103,7 +103,7 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
                         <Trans
                             i18nKey="home:introduction.title"
                             components={[
-                                <h1 className="text-6xl font-black" />,
+                                <h1 className="font-header text-6xl font-extrabold tracking-wide" />,
                                 <span className="text-blue-500" />,
                             ]}
                         />
@@ -114,7 +114,7 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
                     </div>
                 </div>
             )}
-            <h2 className="mb-3 text-3xl font-black">
+            <h2 className="mb-3 font-header text-3xl font-bold tracking-wide">
                 {t("common:pages.home")}
             </h2>
             <Masonry

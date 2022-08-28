@@ -5,10 +5,10 @@ module.exports = {
     ],
     theme: {
         fontFamily: {
-            sans: ["var(--gbx-font-inter)", "system-ui", "sans-serif"],
+            sans: ["var(--gbx-font-sans)", "system-ui", "sans-serif"],
             header: [
                 "var(--gbx-font-header)",
-                "var(--gbx-font-inter)",
+                "var(--gbx-font-sans)",
                 "system-ui",
                 "sans-serif",
             ],
