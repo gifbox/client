@@ -46,8 +46,9 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
     ) => {
         if (reachedEnd) return
 
-        const limit = startIndex + stopIndex
-        if (limit > 100) return
+        let limit = startIndex + stopIndex
+        // FIXME: Band-aid
+        if (limit > 100) limit = 100
 
         const gbClient = new Client({
             baseURL: apiUrl,
@@ -117,7 +118,7 @@ const Home = ({ initPosts, loggedIn, apiUrl }: HomeProps) => {
             <h2 className="mb-3 font-header text-3xl font-bold tracking-wide">
                 {t("common:pages.home")}
             </h2>
-            <Masonry
+            <CSRMasonry
                 items={posts}
                 render={SinglePost}
                 onRender={maybeLoadMore}
